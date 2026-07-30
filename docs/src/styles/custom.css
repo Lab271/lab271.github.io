@@ -1,0 +1,170 @@
+/* Lab271 theme, mapped onto Starlight's design tokens. Palette source: the
+   Lab271 brand kit (labs-branding, brand/tokens/lab271.tokens.json) - Navy
+   #1A1F36 (anchor), Primary Blue #6C8EEF (the signature), Blue Light #A8C0FF
+   (gradient partner), Teal #36C5B0 (the one "spark" per composition), Off-white
+   #F8F9FB. Dark mode's page background is SBP Full black #020C17, the near-black
+   the brand kit sanctions in place of pure black, with Navy on top of it as the
+   nav bar. Starlight derives all surfaces/text/borders from an accent ramp
+   (low/accent/high), a gray ramp (1=lightest..6/7=darkest in dark mode,
+   inverted in light) and black/white, so overriding those restyles the whole
+   site. Dark mode is `:root`; light mode is `:root[data-theme='light']`. */
+:root {
+	/* Lab271 Dark */
+	--sl-color-accent-low: #232a52;
+	--sl-color-accent: #6c8eef;
+	--sl-color-accent-high: #a8c0ff;
+	--sl-color-white: #ffffff; /* headings */
+	--sl-color-gray-1: #eef1f8;
+	--sl-color-gray-2: #c5cbdb; /* body text (fg) */
+	--sl-color-gray-3: #9ba3b5; /* muted (grey-400) */
+	--sl-color-gray-4: #5f6878; /* dim (grey-600) */
+	--sl-color-gray-5: #333a55; /* borders / hairlines */
+	--sl-color-gray-6: #1a1f36; /* nav & sidebar bg (Navy) */
+	--sl-color-black: #020c17; /* page bg - SBP Full black, the sanctioned near-black */
+}
+:root[data-theme='light'] {
+	/* Lab271 Light */
+	--sl-color-accent-low: #e9eefc; /* soft periwinkle wash */
+	--sl-color-accent: #6c8eef;
+	--sl-color-accent-high: #3a57c0; /* darkened from blue-dark for link contrast on white */
+	--sl-color-white: #1a1f36; /* headings (fg), Navy */
+	--sl-color-gray-1: #232942;
+	--sl-color-gray-2: #2d3142; /* body text (grey-800) */
+	--sl-color-gray-3: #5f6878; /* dim (grey-600) */
+	--sl-color-gray-4: #9ba3b5; /* faint (grey-400) */
+	--sl-color-gray-5: #e2e5eb; /* borders (grey-200) */
+	--sl-color-gray-6: #eef1f8;
+	--sl-color-gray-7: #f8f9fb; /* Off-white */
+	--sl-color-black: #ffffff; /* page bg */
+}
+
+/* Fonts: Inter and JetBrains Mono are the brand kit's open stand-ins for TT
+   Interphases and TT Interphases Mono (licensed faces that can't ship on a
+   public repo/build). Bold headings with tight tracking, 1.5 line-height body,
+   mono as "a pinch of tech". Webfonts loaded in astro.config.mjs's `head`. */
+:root {
+	--sl-font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+	--sl-font-mono: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
+}
+h1,
+h2,
+h3 {
+	font-weight: 700;
+	letter-spacing: -0.02em;
+}
+
+/* Brandbook: Navy is the anchor for dark surfaces, so the nav bar is Navy in
+   both color modes and the logo has a single variant (white wordmark, blue
+   "271" - see src/assets/logo.svg). Scoped to the header so descendants (social
+   icons, theme select) pick up these overridden tokens instead of the page's
+   light/dark ones, which would otherwise be low-contrast against a navy bar. */
+header.header {
+	--sl-color-bg-nav: #1a1f36;
+	--sl-color-hairline-shade: rgba(255, 255, 255, 0.2);
+	--sl-color-text-accent: #a8c0ff;
+	--sl-color-white: #ffffff;
+	--sl-color-gray-1: #ffffff;
+	--sl-color-gray-2: #eef1f8;
+	--sl-color-gray-3: #c5cbdb;
+	--sl-color-gray-5: rgba(255, 255, 255, 0.3);
+}
+
+/* The splash page splits into content panels separated by top borders; drop the
+   dividers so the page reads as one surface. */
+.content-panel {
+	border-top: none;
+}
+
+/* Hero: soft-cornered photo (brandbook stylization: square with rounded corners,
+   "tech plus human"). Starlight sizes the hero for a full-height splash, but
+   this page has content directly under it, so trim the vertical padding. */
+.hero img {
+	border-radius: 1rem;
+}
+@media (min-width: 50rem) {
+	.hero {
+		padding-block: clamp(2rem, calc(1rem + 5vmin), 5rem) clamp(1.5rem, 4vmin, 3rem);
+	}
+}
+.hero .tagline {
+	font-size: var(--sl-text-lg);
+	line-height: 1.5;
+}
+/* "e = 2.71828" motif: mono, tracked, one line under the tagline. Mono is a
+   pinch of tech - never larger than the heading it supports. */
+.hero .tagline .motif {
+	display: block;
+	margin-top: 0.75rem;
+	font-family: var(--sl-font-mono);
+	font-size: var(--sl-text-xs);
+	letter-spacing: 0.08em;
+	color: var(--sl-color-gray-3);
+}
+
+/* Brandbook stylization calls for rounded containers (cards, text/image panels)
+   rather than sharp rectangles. */
+.card {
+	border-radius: 0.625rem;
+	padding: 0.75rem 1rem;
+	gap: 0.4rem;
+}
+
+/* Three columns and a tighter gap for the denser project grids. */
+@media (min-width: 50rem) {
+	.projects .card-grid {
+		grid-template-columns: repeat(3, 1fr);
+		gap: 0.75rem;
+	}
+}
+
+/* Make a whole card clickable (the card is wrapped in a `.card-link` anchor)
+   with a subtle lift-and-highlight on hover. Flat and border-defined - no heavy
+   shadows. */
+.card-link {
+	display: block;
+	height: 100%;
+	text-decoration: none;
+	color: inherit;
+}
+.card-link .card {
+	height: 100%;
+	transition:
+		transform 0.15s ease,
+		border-color 0.15s ease,
+		box-shadow 0.15s ease;
+}
+.card-link:hover .card {
+	transform: translateY(-3px);
+	border-color: var(--sl-color-text-accent);
+	box-shadow: 0 0.5rem 1rem -0.5rem rgba(26, 31, 54, 0.35);
+}
+
+/* The repository list: two columns of name / language / description, denser
+   than a card grid, which suits a full inventory. */
+.repo-list {
+	list-style: none;
+	padding: 0;
+	display: grid;
+	gap: 1rem;
+}
+@media (min-width: 50rem) {
+	.repo-list {
+		grid-template-columns: repeat(2, 1fr);
+		gap: 1rem 2rem;
+	}
+}
+.repo-list > li {
+	margin: 0;
+	padding-left: 0.9rem;
+	border-left: 2px solid var(--sl-color-gray-5);
+}
+.repo-list .repo-lang {
+	margin-left: 0.5rem;
+	font-family: var(--sl-font-mono);
+	font-size: var(--sl-text-xs);
+	color: var(--sl-color-gray-3);
+}
+.repo-list .repo-desc {
+	display: block;
+	color: var(--sl-color-gray-2);
+}

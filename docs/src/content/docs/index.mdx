@@ -1,0 +1,117 @@
+---
+title: Open source from Lab271
+description: Open source from Lab271, the Schuberg Philis innovation lab.
+template: splash
+head:
+  - tag: title
+    content: Lab271 Open Source
+hero:
+  image:
+    alt: An engineer soldering a prototype board at the Lab271 workbench
+    file: ../../assets/hero.jpg
+  tagline: |
+    Tools, integrations and experiments from the Schuberg Philis innovation lab,
+    published as we build them.
+    <span class="motif">e &asymp; 2.71828, the growth constant</span>
+  actions:
+    - text: Browse the repositories
+      link: '#all-public-repositories'
+      icon: right-arrow
+      variant: primary
+    - text: Lab271 on GitHub
+      link: https://github.com/Lab271
+      icon: external
+      variant: minimal
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+import { Content as Intro } from '../../intro.md';
+import repos from '../../data/repos.json';
+
+<Intro />
+
+## Highlights
+
+<div class="projects">
+	<CardGrid>
+		<a class="card-link" href="https://github.com/Lab271/labs-slidecue">
+			<Card title="labs-slidecue">
+				Control a PowerPoint deck from your phone or tablet. Scan a QR code to
+				connect, then drive the slides with speaker notes and a timer on the
+				remote.
+			</Card>
+		</a>
+		<a class="card-link" href="https://github.com/Lab271/labs-pen-plotter">
+			<Card title="labs-pen-plotter">
+				Browser-based control for a GRBL pen plotter. Import an SVG, preview the
+				pen path, then stream the G-code through a gateway daemon that keeps
+				plotting even if the browser goes away.
+			</Card>
+		</a>
+		<a class="card-link" href="https://github.com/Lab271/git-worktree">
+			<Card title="git-worktree">
+				A complete git-worktree workflow in bash, with tab completion and
+				virtualenv handling. A write-up on stories.lab271.io walks through it.
+			</Card>
+		</a>
+		<a class="card-link" href="https://github.com/orgs/Lab271/repositories?q=labs-homeassistant">
+			<Card title="Home Assistant integrations">
+				How the lab space runs itself: custom integrations for the Midas M32
+				mixer, the networked projectors and the room lighting.
+			</Card>
+		</a>
+		<a class="card-link" href="https://github.com/Lab271/labs-input-viewer">
+			<Card title="labs-input-viewer">
+				OBS without the complexity. Put one or two capture card feeds side by
+				side on an ultrawide display, and switch between them with a keypress.
+			</Card>
+		</a>
+		<a class="card-link" href="https://github.com/Lab271/wasm">
+			<Card title="wasm">
+				Can a WebAssembly runtime stand in for a container on serverless-style
+				workloads? Each experiment tests one hypothesis and measures it on real
+				hardware.
+			</Card>
+		</a>
+	</CardGrid>
+</div>
+
+## What's next
+
+The lab's larger software projects are built in the open too. They live
+elsewhere:
+
+<div class="projects">
+	<CardGrid>
+		<a class="card-link" href="https://mvl-lang.org">
+			<Card title="MVL">
+				The Maximum Verifiable Language. If a machine writes the code, design the
+				language for the compiler instead: eleven properties proven at compile
+				time, in the smallest grammar that can carry them.
+			</Card>
+		</a>
+		<a class="card-link" href="https://github.com/schubergphilis/mdd">
+			<Card title="MDD">
+				Markdown Does Docs. Bidirectional sync between markdown-in-git and
+				Confluence, SharePoint and Office, around one typed document IR.
+			</Card>
+		</a>
+	</CardGrid>
+</div>
+
+## All public repositories
+
+Every public [Lab271](https://github.com/Lab271) repository, most recently
+pushed first:
+
+<ul class="repo-list">
+	{repos.map((repo) => (
+		<li>
+			<a href={repo.url}>
+				<strong>{repo.name}</strong>
+			</a>
+			{repo.language ? <span class="repo-lang">{repo.language}</span> : null}
+			{repo.description ? <span class="repo-desc">{repo.description}</span> : null}
+		</li>
+	))}
+</ul>

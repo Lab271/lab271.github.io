@@ -1,0 +1,47 @@
+[tools]
+bun = "1.3"
+
+[tasks.docs-install]
+description = "Install site dependencies"
+dir = "docs"
+run = "bun install"
+
+[tasks.docs-dev]
+description = "Run the Starlight dev server"
+dir = "docs"
+run = "bun run dev"
+
+[tasks.docs-build]
+description = "Build the static site into docs/dist"
+dir = "docs"
+run = "bun run build"
+
+[tasks.docs-preview]
+description = "Preview the production build locally"
+dir = "docs"
+run = "bun run preview"
+
+[tasks.docs-check]
+description = "Type-check the Astro site"
+dir = "docs"
+run = "bunx astro check"
+
+[tasks.docs-repos]
+description = "Regenerate docs/src/data/repos.json from the Lab271 GitHub org"
+dir = "docs"
+run = "node scripts/refresh-repos.mjs"
+
+[tasks.docs-marks]
+description = "Regenerate src/assets/logo.svg and badge.svg (Inter outlined to paths)"
+dir = "docs"
+run = "uv run scripts/refresh-marks.py"
+
+[tasks.docs-icons]
+description = "Re-export the favicon/apple-touch-icon PNGs from src/assets/badge.svg"
+dir = "docs"
+run = "./scripts/refresh-icons.sh"
+
+[tasks.docs-clean]
+description = "Remove build output and dependencies"
+dir = "docs"
+run = "rm -rf dist node_modules .astro"
