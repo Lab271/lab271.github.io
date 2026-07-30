@@ -45,12 +45,19 @@ When starting the dev server directly (not via mise), use background mode:
     (`mise run docs-icons`).
   - `src/assets/hero.jpg`: the hero photo.
   - `src/data/repos.json`: committed, auto-generated list of public `Lab271`
-    repos. Regenerate with `mise run docs-repos` rather than editing by hand.
+    repos that carry an open source license. Regenerate with `mise run
+    docs-repos` rather than editing by hand.
+  - `scripts/refresh-repos.mjs`: what `mise run docs-repos` runs. Plain node, no
+    dependencies, so it works without `bun install`.
 - `.github/workflows/ci.yml`: build and type-check on push/PR, plus a `zizmor`
   job auditing the workflows themselves.
 - `.github/workflows/deploy.yml`: builds and publishes `docs/dist` to GitHub
   Pages on every push to `main`. The repository's Pages source must be set to
   "GitHub Actions" (Settings, then Pages) for this to work.
+- `.github/workflows/refresh-repos.yml`: weekly (Monday) rerun of `mise run
+  docs-repos`, committing `repos.json` to `main` if it changed. A push made with
+  `GITHUB_TOKEN` does not trigger other workflows, so it dispatches `deploy.yml`
+  afterwards instead of relying on the push event.
 - `.github/dependabot.yml`: weekly updates for the `docs/` bun lockfile and the
   GitHub Actions used in workflows.
 

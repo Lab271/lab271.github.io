@@ -6,7 +6,8 @@
 // The org is small enough to list in full, so - unlike the schubergphilis
 // equivalent - there is no "recent activity" cutoff here. Forks and archived
 // repos are excluded by `gh`; this repo and the org profile repo are excluded
-// below because neither is a project.
+// below because neither is a project, and so are repos without an open source
+// license.
 import { execFileSync } from 'node:child_process';
 import { writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
@@ -32,13 +33,20 @@ const raw = execFileSync(
 		'--limit',
 		'1000',
 		'--json',
-		'name,description,url,homepageUrl,primaryLanguage,pushedAt',
+		'name,description,url,homepageUrl,primaryLanguage,pushedAt,licenseInfo',
 	],
 	{ encoding: 'utf8' },
 );
 
+// GitHub reports a detected license as a `licenseInfo.key`; repos without a
+// LICENSE file have no `licenseInfo` at all, and repos whose license file it
+// cannot match to a known license get the `other` pseudo-license (SPDX
+// `NOASSERTION`). Neither counts as open source for our purposes.
+const hasOpenSourceLicense = (repo) => repo.licenseInfo !== null && repo.licenseInfo.key !== 'other';
+
 const repos = JSON.parse(raw)
 	.filter((repo) => !EXCLUDE.has(repo.name.toLowerCase()))
+	.filter(hasOpenSourceLicense)
 	.sort((a, b) => new Date(b.pushedAt) - new Date(a.pushedAt))
 	.map(({ name, description, url, homepageUrl, primaryLanguage, pushedAt }) => ({
 		name,
