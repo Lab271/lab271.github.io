@@ -1,11 +1,11 @@
 [
 	{
-		"name": "labs-slidecue",
-		"description": "Control PowerPoint presentations from any device on your network. Electron desktop app with a phone/tablet web remote.",
-		"url": "https://github.com/Lab271/labs-slidecue",
+		"name": "wasm",
+		"description": "WebAssembly experiments.",
+		"url": "https://github.com/Lab271/wasm",
 		"homepageUrl": "",
-		"language": "TypeScript",
-		"pushedAt": "2026-07-30T14:56:51Z"
+		"language": "Rust",
+		"pushedAt": "2026-08-02T20:54:47Z"
 	},
 	{
 		"name": "labs-input-viewer",
@@ -13,7 +13,31 @@
 		"url": "https://github.com/Lab271/labs-input-viewer",
 		"homepageUrl": "",
 		"language": "JavaScript",
-		"pushedAt": "2026-07-30T14:56:12Z"
+		"pushedAt": "2026-08-02T01:30:05Z"
+	},
+	{
+		"name": "labs-slidecue",
+		"description": "Control PowerPoint presentations from any device on your network. Electron desktop app with a phone/tablet web remote.",
+		"url": "https://github.com/Lab271/labs-slidecue",
+		"homepageUrl": "",
+		"language": "TypeScript",
+		"pushedAt": "2026-08-02T00:55:47Z"
+	},
+	{
+		"name": "labs-homeassistant-space-lights",
+		"description": "Home Assistant control for the Space room lighting.",
+		"url": "https://github.com/Lab271/labs-homeassistant-space-lights",
+		"homepageUrl": "",
+		"language": "Python",
+		"pushedAt": "2026-07-31T12:15:36Z"
+	},
+	{
+		"name": "research.lab271.io",
+		"description": "Our research home base",
+		"url": "https://github.com/Lab271/research.lab271.io",
+		"homepageUrl": "https://research.lab271.io/",
+		"language": "",
+		"pushedAt": "2026-07-31T11:27:50Z"
 	},
 	{
 		"name": "labs-homeassistant-midas",
@@ -21,7 +45,7 @@
 		"url": "https://github.com/Lab271/labs-homeassistant-midas",
 		"homepageUrl": "",
 		"language": "Python",
-		"pushedAt": "2026-07-30T14:55:24Z"
+		"pushedAt": "2026-07-31T09:51:14Z"
 	},
 	{
 		"name": "labs-homeassistant-projectors",
@@ -30,22 +54,6 @@
 		"homepageUrl": "",
 		"language": "Python",
 		"pushedAt": "2026-07-30T14:55:21Z"
-	},
-	{
-		"name": "labs-homeassistant-space-lights",
-		"description": "Home Assistant control for the Space room lighting.",
-		"url": "https://github.com/Lab271/labs-homeassistant-space-lights",
-		"homepageUrl": "",
-		"language": "Python",
-		"pushedAt": "2026-07-30T14:55:19Z"
-	},
-	{
-		"name": "wasm",
-		"description": "WebAssembly experiments.",
-		"url": "https://github.com/Lab271/wasm",
-		"homepageUrl": "",
-		"language": "Shell",
-		"pushedAt": "2026-07-30T14:54:18Z"
 	},
 	{
 		"name": "labs-pen-plotter",
