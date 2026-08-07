@@ -31,11 +31,6 @@ description = "Regenerate docs/src/data/repos.json from the Lab271 GitHub org"
 dir = "docs"
 run = "node scripts/refresh-repos.mjs"
 
-[tasks.docs-marks]
-description = "Regenerate src/assets/logo.svg and badge.svg (Inter outlined to paths)"
-dir = "docs"
-run = "uv run scripts/refresh-marks.py"
-
 [tasks.docs-icons]
 description = "Re-export the favicon/apple-touch-icon PNGs from src/assets/badge.svg"
 dir = "docs"

@@ -1,47 +1,54 @@
 /* Lab271 theme, mapped onto Starlight's design tokens. Palette source: the
-   Lab271 brand kit (labs-branding, brand/tokens/lab271.tokens.json) - Navy
-   #1A1F36 (anchor), Primary Blue #6C8EEF (the signature), Blue Light #A8C0FF
-   (gradient partner), Teal #36C5B0 (the one "spark" per composition), Off-white
-   #F8F9FB. Dark mode's page background is SBP Full black #020C17, the near-black
-   the brand kit sanctions in place of pure black, with Navy on top of it as the
-   nav bar. Starlight derives all surfaces/text/borders from an accent ramp
-   (low/accent/high), a gray ramp (1=lightest..6/7=darkest in dark mode,
-   inverted in light) and black/white, so overriding those restyles the whole
-   site. Dark mode is `:root`; light mode is `:root[data-theme='light']`. */
+   Lab271 design refresh (see ADR-0005 in Lab271/www.lab271.io, which supersedes
+   the Navy/Primary Blue/Teal system this file used to carry from labs-branding)
+   - near-black #020C17 anchors dark surfaces including both the nav bar and the
+   canvas itself, cyan #1EE8ED/#18B9BD is the signature accent, orange
+   #FF7000/#FF8D33 is the one "spark" per composition (the badge's accent rule),
+   and light mode moves off cool off-white onto the refresh's warm paper canvas
+   (#FAF9F5). NOTE: labs-branding's brand/tokens/lab271.tokens.json still
+   reflects the old Navy/Blue/Teal system as of this change - it has not been
+   re-derived yet, so it is temporarily NOT the source of truth for this
+   palette; treat this file and its www.lab271.io sibling as authoritative
+   until labs-branding catches up. Starlight derives all surfaces/text/borders
+   from an accent ramp (low/accent/high), a gray ramp (1=lightest..6/7=darkest
+   in dark mode, inverted in light) and black/white, so overriding those
+   restyles the whole site. Dark mode is `:root`; light mode is
+   `:root[data-theme='light']`. */
 :root {
 	/* Lab271 Dark */
-	--sl-color-accent-low: #232a52;
-	--sl-color-accent: #6c8eef;
-	--sl-color-accent-high: #a8c0ff;
+	--sl-color-accent-low: #0d2f34;
+	--sl-color-accent: #1ee8ed;
+	--sl-color-accent-high: #8ff3f6;
 	--sl-color-white: #ffffff; /* headings */
 	--sl-color-gray-1: #eef1f8;
 	--sl-color-gray-2: #c5cbdb; /* body text (fg) */
-	--sl-color-gray-3: #9ba3b5; /* muted (grey-400) */
-	--sl-color-gray-4: #5f6878; /* dim (grey-600) */
-	--sl-color-gray-5: #333a55; /* borders / hairlines */
-	--sl-color-gray-6: #1a1f36; /* nav & sidebar bg (Navy) */
-	--sl-color-black: #020c17; /* page bg - SBP Full black, the sanctioned near-black */
+	--sl-color-gray-3: #8aa0b8; /* muted */
+	--sl-color-gray-4: #5f6878; /* dim */
+	--sl-color-gray-5: #12263f; /* borders / hairlines */
+	--sl-color-gray-6: #020c17; /* nav & sidebar bg - same near-black as the canvas */
+	--sl-color-black: #020c17; /* page bg - SBP Full black */
 }
 :root[data-theme='light'] {
 	/* Lab271 Light */
-	--sl-color-accent-low: #e9eefc; /* soft periwinkle wash */
-	--sl-color-accent: #6c8eef;
-	--sl-color-accent-high: #3a57c0; /* darkened from blue-dark for link contrast on white */
-	--sl-color-white: #1a1f36; /* headings (fg), Navy */
-	--sl-color-gray-1: #232942;
-	--sl-color-gray-2: #2d3142; /* body text (grey-800) */
-	--sl-color-gray-3: #5f6878; /* dim (grey-600) */
-	--sl-color-gray-4: #9ba3b5; /* faint (grey-400) */
-	--sl-color-gray-5: #e2e5eb; /* borders (grey-200) */
-	--sl-color-gray-6: #eef1f8;
-	--sl-color-gray-7: #f8f9fb; /* Off-white */
-	--sl-color-black: #ffffff; /* page bg */
+	--sl-color-accent-low: #e8f2fd; /* soft blue wash */
+	--sl-color-accent: #18b9bd; /* darkened cyan for AA text contrast on white/paper */
+	--sl-color-accent-high: #128b8e;
+	--sl-color-white: #020c17; /* headings (fg) - near-black, not navy */
+	--sl-color-gray-1: #1c2b3a;
+	--sl-color-gray-2: #3d4c5c; /* body text */
+	--sl-color-gray-3: #6b7280; /* dim */
+	--sl-color-gray-4: #9ba3b5; /* faint */
+	--sl-color-gray-5: #e5e0d3; /* borders - warm-tinted, matching the paper canvas */
+	--sl-color-gray-6: #f7f5ef; /* panel */
+	--sl-color-gray-7: #faf9f5; /* canvas-2 */
+	--sl-color-black: #faf9f5; /* page bg - warm paper canvas, not cool off-white */
 }
 
 /* Fonts: Inter and JetBrains Mono are the brand kit's open stand-ins for TT
    Interphases and TT Interphases Mono (licensed faces that can't ship on a
-   public repo/build). Bold headings with tight tracking, 1.5 line-height body,
-   mono as "a pinch of tech". Webfonts loaded in astro.config.mjs's `head`. */
+   public repo/build) - unchanged by the refresh. Bold headings with tight
+   tracking, 1.5 line-height body, mono as "a pinch of tech". Webfonts loaded
+   in astro.config.mjs's `head`. */
 :root {
 	--sl-font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 	--sl-font-mono: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
@@ -53,15 +60,16 @@ h3 {
 	letter-spacing: -0.02em;
 }
 
-/* Brandbook: Navy is the anchor for dark surfaces, so the nav bar is Navy in
-   both color modes and the logo has a single variant (white wordmark, blue
+/* Near-black is the anchor for dark surfaces, so the nav bar stays near-black
+   in both color modes and the logo has a single variant (white wordmark, cyan
    "271" - see src/assets/logo.svg). Scoped to the header so descendants (social
    icons, theme select) pick up these overridden tokens instead of the page's
-   light/dark ones, which would otherwise be low-contrast against a navy bar. */
+   light/dark ones, which would otherwise be low-contrast against a near-black
+   bar. */
 header.header {
-	--sl-color-bg-nav: #1a1f36;
-	--sl-color-hairline-shade: rgba(255, 255, 255, 0.2);
-	--sl-color-text-accent: #a8c0ff;
+	--sl-color-bg-nav: #020c17;
+	--sl-color-hairline-shade: rgba(255, 255, 255, 0.14);
+	--sl-color-text-accent: #1ee8ed;
 	--sl-color-white: #ffffff;
 	--sl-color-gray-1: #ffffff;
 	--sl-color-gray-2: #eef1f8;
@@ -136,7 +144,7 @@ header.header {
 .card-link:hover .card {
 	transform: translateY(-3px);
 	border-color: var(--sl-color-text-accent);
-	box-shadow: 0 0.5rem 1rem -0.5rem rgba(26, 31, 54, 0.35);
+	box-shadow: 0 0.5rem 1rem -0.5rem rgba(2, 12, 23, 0.35);
 }
 
 /* The repository list: two columns of name / language / description, denser
