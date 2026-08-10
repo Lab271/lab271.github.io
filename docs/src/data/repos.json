@@ -1,19 +1,11 @@
 [
 	{
-		"name": "wasm",
-		"description": "WebAssembly experiments.",
-		"url": "https://github.com/Lab271/wasm",
-		"homepageUrl": "",
-		"language": "Rust",
-		"pushedAt": "2026-08-02T20:54:47Z"
-	},
-	{
 		"name": "labs-input-viewer",
 		"description": "Dual HDMI capture card viewer for ultrawide displays",
 		"url": "https://github.com/Lab271/labs-input-viewer",
 		"homepageUrl": "",
 		"language": "JavaScript",
-		"pushedAt": "2026-08-02T01:30:05Z"
+		"pushedAt": "2026-08-09T22:34:08Z"
 	},
 	{
 		"name": "labs-slidecue",
@@ -21,7 +13,23 @@
 		"url": "https://github.com/Lab271/labs-slidecue",
 		"homepageUrl": "",
 		"language": "TypeScript",
-		"pushedAt": "2026-08-02T00:55:47Z"
+		"pushedAt": "2026-08-07T21:44:59Z"
+	},
+	{
+		"name": "labs-pen-plotter",
+		"description": "Pen plotter controller, gateway, and packaging.",
+		"url": "https://github.com/Lab271/labs-pen-plotter",
+		"homepageUrl": "",
+		"language": "TypeScript",
+		"pushedAt": "2026-08-07T14:51:06Z"
+	},
+	{
+		"name": "wasm",
+		"description": "WebAssembly experiments.",
+		"url": "https://github.com/Lab271/wasm",
+		"homepageUrl": "lab271.github.io",
+		"language": "Rust",
+		"pushedAt": "2026-08-06T20:51:53Z"
 	},
 	{
 		"name": "labs-homeassistant-space-lights",
@@ -29,15 +37,15 @@
 		"url": "https://github.com/Lab271/labs-homeassistant-space-lights",
 		"homepageUrl": "",
 		"language": "Python",
-		"pushedAt": "2026-07-31T12:15:36Z"
+		"pushedAt": "2026-08-06T13:00:48Z"
 	},
 	{
-		"name": "research.lab271.io",
-		"description": "Our research home base",
-		"url": "https://github.com/Lab271/research.lab271.io",
-		"homepageUrl": "https://research.lab271.io/",
-		"language": "",
-		"pushedAt": "2026-07-31T11:27:50Z"
+		"name": "labs-homeassistant-projectors",
+		"description": "Home Assistant custom integration for networked projectors (Vivitek today, multi-vendor by design).",
+		"url": "https://github.com/Lab271/labs-homeassistant-projectors",
+		"homepageUrl": "",
+		"language": "Python",
+		"pushedAt": "2026-08-06T12:59:02Z"
 	},
 	{
 		"name": "labs-homeassistant-midas",
@@ -46,22 +54,6 @@
 		"homepageUrl": "",
 		"language": "Python",
 		"pushedAt": "2026-07-31T09:51:14Z"
-	},
-	{
-		"name": "labs-homeassistant-projectors",
-		"description": "Home Assistant custom integration for networked projectors (Vivitek today, multi-vendor by design).",
-		"url": "https://github.com/Lab271/labs-homeassistant-projectors",
-		"homepageUrl": "",
-		"language": "Python",
-		"pushedAt": "2026-07-30T14:55:21Z"
-	},
-	{
-		"name": "labs-pen-plotter",
-		"description": "Pen plotter controller, gateway, and packaging.",
-		"url": "https://github.com/Lab271/labs-pen-plotter",
-		"homepageUrl": "",
-		"language": "TypeScript",
-		"pushedAt": "2026-07-30T14:54:16Z"
 	},
 	{
 		"name": "git-worktree",
