@@ -1,2 +1,13 @@
-# macOS-specific files
+# mise local overrides (the committed .mise.toml is the shared config)
+.mise.local.toml
+mise.local.toml
+
+# environment variables
+.env
+.env.*
+
+# editor and OS cruft
 .DS_Store
+.idea/
+.vscode/
+*.swp

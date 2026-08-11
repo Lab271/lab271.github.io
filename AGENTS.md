@@ -1,5 +1,8 @@
 # AGENTS.md
 
+This file (`AGENTS.md`) is the canonical agent configuration. `CLAUDE.md` is a
+symlink to this file.
+
 Source for <https://lab271.github.io/>, an Astro Starlight landing page for the
 [Lab271](https://github.com/Lab271) organization. The site lives in `docs/` (a
 subdirectory, not the repo root) so it can sit alongside repo-level tooling like
@@ -24,7 +27,14 @@ mise run docs-check     # astro check (type/content check)
 mise run docs-build     # static build into docs/dist
 mise run docs-repos     # regenerate docs/src/data/repos.json from the Lab271 org (needs `gh` auth)
 mise run docs-icons     # re-export the favicon PNGs from src/assets/badge.svg (needs librsvg)
+mise run docs-preview   # serve the production build locally
+mise run docs-clean     # remove dist, node_modules and .astro
+mise run ci             # docs-install, docs-check, docs-build, as CI runs them
+mise run ci-watch       # follow the GitHub Actions run for the current branch
 ```
+
+Run `mise run ci` before pushing, and `mise run ci-watch` after. Local success
+is not proof the workflow passes; only the real run is.
 
 When starting the dev server directly (not via mise), use background mode:
 `astro dev --background`, then `astro dev stop`/`status`/`logs`.
@@ -49,6 +59,8 @@ When starting the dev server directly (not via mise), use background mode:
     docs-repos` rather than editing by hand.
   - `scripts/refresh-repos.mjs`: what `mise run docs-repos` runs. Plain node, no
     dependencies, so it works without `bun install`.
+  - `agents/issue-tracker.md`: the issue tracker and labels in use. Not part of
+    the site; Astro only builds `docs/src/`.
 - `.github/workflows/ci.yml`: build and type-check on push/PR, plus a `zizmor`
   job auditing the workflows themselves.
 - `.github/workflows/deploy.yml`: builds and publishes `docs/dist` to GitHub
@@ -60,6 +72,26 @@ When starting the dev server directly (not via mise), use background mode:
   afterwards instead of relying on the push event.
 - `.github/dependabot.yml`: weekly updates for the `docs/` bun lockfile and the
   GitHub Actions used in workflows.
+- `LICENSE`: proprietary, all rights reserved. The repository is public so
+  GitHub Pages can serve it, not so it can be reused.
+- `CONTRIBUTING.md`: this repository does not take third-party contributions.
+  Issues reporting a broken or inaccurate page are still welcome.
+
+## Agent skills
+
+### Git remote
+
+Use GitHub with the `gh` CLI. The remote is
+<https://github.com/Lab271/lab271.github.io>.
+
+### Issue tracker
+
+Use GitHub issues. See `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+Use needs-triage, needs-info, ready-for-agent, ready-for-human, wontfix. See
+`docs/agents/issue-tracker.md`.
 
 ## Branding
 
@@ -102,7 +134,10 @@ meantime. The rules that shaped what is here:
   (customer, demo, infrastructure and thesis repos). `docs-repos` filters to
   public sources, and hand-written sections must do the same.
 - Third-party GitHub Actions are pinned to a full commit SHA with a trailing
-  `# vX.Y.Z` comment; Dependabot bumps them.
+  `# vX.Y.Z` comment; Dependabot bumps them. Audit with
+  `GH_TOKEN=$(gh auth token) zizmor --collect=all --strict-collection .github/`
+  and scope it to `.github/`: a bare `zizmor .` walks `docs/node_modules` and
+  reports on vendored dependencies' own workflows.
 - `@astrojs/check` doesn't yet support TypeScript's native (7.x) compiler API,
   so `docs/package.json` pins `typescript` to `^6`. See
   `.github/dependabot.yml` for the corresponding ignore rule.
