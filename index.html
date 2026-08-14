@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Lab271 open source has moved to lab271.io/open-source/</title>
+
+		<!--
+			This page exists only to keep https://lab271.github.io/ working. The open
+			source index it used to serve is now built by Lab271/www.lab271.io and
+			published at https://lab271.io/open-source/ (ADR-0009).
+
+			GitHub Pages cannot return a 301. A real one needs a custom domain on this
+			repository, and lab271.io resolves to CloudFront rather than to Pages, so
+			it cannot be one. What follows is the strongest redirect a static host can
+			give, in the order it takes effect:
+
+			  1. location.replace() below, for anyone with JavaScript. replace() rather
+			     than assignment, so this page leaves no history entry and Back does
+			     not bounce the visitor straight back into it.
+			  2. the meta refresh, for anyone without. Zero delay, which search engines
+			     treat as a permanent redirect.
+			  3. rel=canonical, which tells a crawler which URL to keep.
+			  4. the visible link, if all three are ignored or blocked.
+
+			Deliberately no `noindex`: it contradicts the canonical, and would ask
+			search engines to drop this page rather than consolidate it onto the new
+			one.
+		-->
+		<link rel="canonical" href="https://lab271.io/open-source/" />
+		<meta http-equiv="refresh" content="0; url=https://lab271.io/open-source/" />
+		<script>
+			location.replace('https://lab271.io/open-source/');
+		</script>
+
+		<style>
+			/* Self-contained: no webfont, no external stylesheet. The page is visible
+			   for a few hundred milliseconds at most, and a network round trip to
+			   render it would be the slowest thing on it. */
+			:root {
+				color-scheme: dark;
+			}
+			body {
+				margin: 0;
+				min-height: 100vh;
+				display: grid;
+				place-items: center;
+				padding: 2rem;
+				background: #020c17;
+				color: #e8edf2;
+				font-family:
+					Inter,
+					-apple-system,
+					BlinkMacSystemFont,
+					'Segoe UI',
+					Helvetica,
+					Arial,
+					sans-serif;
+				line-height: 1.6;
+				text-align: center;
+			}
+			p {
+				margin: 0 0 0.75rem;
+			}
+			.note {
+				font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+				font-size: 0.8125rem;
+				letter-spacing: 0.06em;
+				color: #8fa3b8;
+			}
+			.slash {
+				color: #1ee8ed;
+			}
+			a {
+				color: #1ee8ed;
+			}
+		</style>
+	</head>
+	<body>
+		<main>
+			<p class="note">lab271 <span class="slash">\</span> open source</p>
+			<p>This page has moved to <a href="https://lab271.io/open-source/">lab271.io/open-source/</a>.</p>
+			<p class="note">Redirecting. If nothing happens, follow the link above.</p>
+		</main>
+	</body>
+</html>
