@@ -3,79 +3,45 @@
 This file (`AGENTS.md`) is the canonical agent configuration. `CLAUDE.md` is a
 symlink to this file.
 
-Source for <https://lab271.github.io/>, an Astro Starlight landing page for the
-[Lab271](https://github.com/Lab271) organization. The site lives in `docs/` (a
-subdirectory, not the repo root) so it can sit alongside repo-level tooling like
-`.mise.toml` and `.github/`.
+## This repository is retired
 
-This is a sibling of
-[schubergphilis.github.io](https://github.com/schubergphilis/schubergphilis.github.io),
-which it is derived from and links back to. Keep the two structurally aligned
-(same layout, same tasks, same workflows) and diverge only on branding and
-content.
+It served <https://lab271.github.io/>, an Astro Starlight landing page indexing
+the public open source work of [Lab271](https://github.com/Lab271). That page is
+now built by [`Lab271/www.lab271.io`](https://github.com/Lab271/www.lab271.io)
+and published at <https://lab271.io/open-source/>. See ADR-0009 there.
 
-## Development
+What remains here is `index.html` and `404.html`, which redirect to that URL, so
+the old address keeps working. There is no site, no build, no dependency and no
+workflow left.
 
-Tools are pinned with [mise](https://mise.jdx.dev/); tasks run through
-[mise tasks](https://mise.jdx.dev/tasks/) defined in `.mise.toml`.
+**Do not add content or features here.** Anything that would have been a change
+to this site is a change to `Lab271/www.lab271.io`:
 
-```sh
-mise install            # install bun
-mise run docs-install   # bun install
-mise run docs-dev       # dev server at http://localhost:4321/
-mise run docs-check     # astro check (type/content check)
-mise run docs-build     # static build into docs/dist
-mise run docs-repos     # regenerate docs/src/data/repos.json from the Lab271 org (needs `gh` auth)
-mise run docs-icons     # re-export the favicon PNGs from src/assets/badge.svg (needs librsvg)
-mise run docs-preview   # serve the production build locally
-mise run docs-clean     # remove dist, node_modules and .astro
-mise run ci             # docs-install, docs-check, docs-build, as CI runs them
-mise run ci-watch       # follow the GitHub Actions run for the current branch
-```
+| What | Where |
+|---|---|
+| The list of public repositories | `site/src/data/repos.json` |
+| The generator behind it | `site/scripts/refresh-repos.mjs` (`mise run site-repos`) |
+| The page and its hand-written highlights | `site/src/pages/open-source/index.astro` |
+| The weekly refresh | `.github/workflows/refresh-repos.yml` |
 
-Run `mise run ci` before pushing, and `mise run ci-watch` after. Local success
-is not proof the workflow passes; only the real run is.
+The only changes that belong in this repository are to the redirect itself, or
+to the standard policy files (`LICENSE`, `SECURITY.md`, `CONTRIBUTING.md`,
+`CODE_OF_CONDUCT.md`).
 
-When starting the dev server directly (not via mise), use background mode:
-`astro dev --background`, then `astro dev stop`/`status`/`logs`.
+## Editing the redirect
 
-## Layout
+Both files are hand-written, self-contained HTML with no build step. If you
+change the destination, change it in **four** places across the two files:
+`rel=canonical` (index.html only), the `meta http-equiv="refresh"`, the
+`location.replace()` call, and the visible link.
 
-- `docs/`: the Astro Starlight site.
-  - `src/content/docs/index.mdx`: the landing page (single `template: splash`
-    page, no sidebar).
-  - `src/intro.md`: the intro paragraphs, imported into the landing page.
-  - `src/styles/custom.css`: Lab271 brand theme (colors, fonts) mapped onto
-    Starlight's CSS custom properties.
-  - `src/assets/logo.svg`: the horizontal wordmark used in the nav bar. Vendored
-    from the design team's final artwork (the Lab271 design refresh) rather than
-    generated - see Branding below.
-  - `src/assets/badge.svg`: the badge mark, and the master for the favicon PNGs
-    in `public/`. Also vendored artwork. The PNGs are re-exported from it with
-    `scripts/refresh-icons.sh` (`mise run docs-icons`).
-  - `src/assets/hero.jpg`: the hero photo.
-  - `src/data/repos.json`: committed, auto-generated list of public `Lab271`
-    repos that carry an open source license. Regenerate with `mise run
-    docs-repos` rather than editing by hand.
-  - `scripts/refresh-repos.mjs`: what `mise run docs-repos` runs. Plain node, no
-    dependencies, so it works without `bun install`.
-  - `agents/issue-tracker.md`: the issue tracker and labels in use. Not part of
-    the site; Astro only builds `docs/src/`.
-- `.github/workflows/ci.yml`: build and type-check on push/PR, plus a `zizmor`
-  job auditing the workflows themselves.
-- `.github/workflows/deploy.yml`: builds and publishes `docs/dist` to GitHub
-  Pages on every push to `main`. The repository's Pages source must be set to
-  "GitHub Actions" (Settings, then Pages) for this to work.
-- `.github/workflows/refresh-repos.yml`: weekly (Monday) rerun of `mise run
-  docs-repos`, committing `repos.json` to `main` if it changed. A push made with
-  `GITHUB_TOKEN` does not trigger other workflows, so it dispatches `deploy.yml`
-  afterwards instead of relying on the push event.
-- `.github/dependabot.yml`: weekly updates for the `docs/` bun lockfile and the
-  GitHub Actions used in workflows.
-- `LICENSE`: proprietary, all rights reserved. The repository is public so
-  GitHub Pages can serve it, not so it can be reused.
-- `CONTRIBUTING.md`: this repository does not take third-party contributions.
-  Issues reporting a broken or inaccurate page are still welcome.
+GitHub Pages cannot return a 301 — that needs a custom domain on this
+repository, and `lab271.io` resolves to CloudFront rather than to Pages, so it
+cannot be one. The layered approach in those files is the strongest redirect a
+static host can give; the comments in `index.html` explain the ordering.
+
+Pages is served from `main` at the repository root, not from a workflow.
+`.nojekyll` disables Jekyll processing.
 
 ## Agent skills
 
@@ -86,58 +52,23 @@ Use GitHub with the `gh` CLI. The remote is
 
 ### Issue tracker
 
-Use GitHub issues. See `docs/agents/issue-tracker.md`.
+Use GitHub issues: <https://github.com/Lab271/lab271.github.io/issues>.
+
+Issues are the reason this repository is public and unarchived rather than
+archived. `www.lab271.io` is private, so this is the only public place to report
+that a page is wrong or that a repository is missing from the list. Triage them
+here; fix them there.
 
 ### Triage labels
 
-Use needs-triage, needs-info, ready-for-agent, ready-for-human, wontfix. See
-`docs/agents/issue-tracker.md`.
+needs-triage, needs-info, ready-for-agent, ready-for-human, wontfix.
 
-## Branding
-
-The theme implements the Lab271 design refresh (see ADR-0005 in
-`Lab271/www.lab271.io`), which supersedes the `labs-branding`
-(`brand/visual-identity.md`, `brand/tokens/lab271.tokens.json`) Navy/Primary
-Blue/Teal system this site carried before. `labs-branding` has not been
-re-derived from the refresh yet, so it is temporarily stale - treat this
-repo's `custom.css` and its `www.lab271.io` sibling as authoritative in the
-meantime. The rules that shaped what is here:
-
-- **Palette.** Near-black `#020C17` anchors dark surfaces, including the nav
-  bar in both color modes (never pure black). Cyan `#1EE8ED` (dark mode) /
-  `#18B9BD` (light mode, darkened for contrast) is the signature accent.
-  Orange `#FF7000`/`#FF8D33` is a spark: at most one per composition, which
-  here is the rule in the badge. Light mode's canvas is a warm paper off-white
-  (`#FAF9F5`), not a cool gray.
-- **Type.** Inter and JetBrains Mono are the open stand-ins for TT Interphases
-  and TT Interphases Mono, the licensed SBP faces that cannot ship on a public
-  build - unchanged by the refresh. Sentence case headings with tight
-  tracking. Mono is "a pinch of tech", so it is limited to the `e = 2.71828`
-  motif and the language labels.
-- **Marks.** `logo.svg` and `badge.svg` are vendored directly from the design
-  team's final artwork for the refresh, not generated - the previous
-  Inter-outlined-to-paths approach (`scripts/refresh-marks.py`) is retired.
-  Update them by replacing the SVG file with a new export from the design
-  source, not by hand-editing the path data.
-- **Written "Lab271"**, sentence case, no space, in all prose and copy. Never
-  "LAB271" in running text - the all-caps treatment is reserved for the
-  wordmark graphic itself (`logo.svg`).
-- US English throughout.
-- No em dashes in the copy. `docs/scripts/refresh-repos.mjs` normalizes them out
-  of upstream GitHub descriptions too.
+`good first issue` and `help wanted` are misleading here: this repository is not
+open to third-party contributions (see `CONTRIBUTING.md`). Do not apply them.
 
 ## Conventions
 
-- This is an org/root-name GitHub Pages site (`lab271.github.io`), so it deploys
-  at the domain root, with no Astro `base` path.
-- Only **public** Lab271 work belongs on this page. The org is mostly private
-  (customer, demo, infrastructure and thesis repos). `docs-repos` filters to
-  public sources, and hand-written sections must do the same.
-- Third-party GitHub Actions are pinned to a full commit SHA with a trailing
-  `# vX.Y.Z` comment; Dependabot bumps them. Audit with
-  `GH_TOKEN=$(gh auth token) zizmor --collect=all --strict-collection .github/`
-  and scope it to `.github/`: a bare `zizmor .` walks `docs/node_modules` and
-  reports on vendored dependencies' own workflows.
-- `@astrojs/check` doesn't yet support TypeScript's native (7.x) compiler API,
-  so `docs/package.json` pins `typescript` to `^6`. See
-  `.github/dependabot.yml` for the corresponding ignore rule.
+- Written **"Lab271"**, sentence case, no space, in all prose and copy. Never
+  "LAB271" in running text.
+- US English throughout.
+- No em dashes in the copy.

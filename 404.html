@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Lab271 open source has moved to lab271.io/open-source/</title>
+
+		<!--
+			GitHub Pages serves this file for any path it cannot match, so an old deep
+			link into this site lands on the new one rather than on GitHub's 404.
+
+			Same redirect as index.html, and the same constraint: Pages cannot return a
+			301, so this responds 404 and then redirects. That is the correct status —
+			the requested path really is gone — and every visitor still arrives at
+			https://lab271.io/open-source/.
+
+			No rel=canonical here, unlike index.html: this file answers many different
+			URLs, and claiming one canonical for all of them would be a lie to a crawler.
+		-->
+		<meta http-equiv="refresh" content="0; url=https://lab271.io/open-source/" />
+		<script>
+			location.replace('https://lab271.io/open-source/');
+		</script>
+
+		<style>
+			:root {
+				color-scheme: dark;
+			}
+			body {
+				margin: 0;
+				min-height: 100vh;
+				display: grid;
+				place-items: center;
+				padding: 2rem;
+				background: #020c17;
+				color: #e8edf2;
+				font-family:
+					Inter,
+					-apple-system,
+					BlinkMacSystemFont,
+					'Segoe UI',
+					Helvetica,
+					Arial,
+					sans-serif;
+				line-height: 1.6;
+				text-align: center;
+			}
+			p {
+				margin: 0 0 0.75rem;
+			}
+			.note {
+				font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+				font-size: 0.8125rem;
+				letter-spacing: 0.06em;
+				color: #8fa3b8;
+			}
+			.slash {
+				color: #1ee8ed;
+			}
+			a {
+				color: #1ee8ed;
+			}
+		</style>
+	</head>
+	<body>
+		<main>
+			<p class="note">lab271 <span class="slash">\</span> open source</p>
+			<p>
+				This site has moved to <a href="https://lab271.io/open-source/">lab271.io/open-source/</a>.
+			</p>
+			<p class="note">Redirecting. If nothing happens, follow the link above.</p>
+		</main>
+	</body>
+</html>

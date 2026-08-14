@@ -1,55 +1,61 @@
 # lab271.github.io
 
-Source for <https://lab271.github.io/>, a landing page indexing the public
-open source work of [Lab271](https://github.com/Lab271), the Schuberg Philis
-innovation lab, built with
-[Astro Starlight](https://starlight.astro.build/).
+**This site has moved to <https://lab271.io/open-source/>.**
 
-A sibling of
-[schubergphilis.github.io](https://github.com/schubergphilis/schubergphilis.github.io),
-which covers the rest of Schuberg Philis's open source.
+<https://lab271.github.io/> still resolves and redirects there. This repository
+now contains nothing but that redirect.
 
-## Develop
+## Where the content went
 
-Tools are pinned with [mise](https://mise.jdx.dev/); tasks run through mise.
+The open source index this repository used to serve is built by
+[`Lab271/www.lab271.io`](https://github.com/Lab271/www.lab271.io) as an ordinary
+page in the main site's design system, and published to <https://lab271.io/>
+behind CloudFront. See ADR-0009 there.
 
-```sh
-mise install            # install bun
-mise run docs-install   # bun install
-mise run docs-dev       # dev server at http://localhost:4321/
-mise run docs-build     # static build into docs/dist
-mise run docs-repos     # regenerate the repo list from the Lab271 org
-mise run ci             # install, check and build, exactly as CI does
-mise run ci-watch       # follow the GitHub Actions run for the current branch
-```
+**If you came here to change something, change it there.** Specifically:
 
-`mise tasks` lists all of them.
+| What | Where it lives now |
+|---|---|
+| The list of public repositories | `site/src/data/repos.json`, regenerated weekly by `.github/workflows/refresh-repos.yml` |
+| The generator behind it | `site/scripts/refresh-repos.mjs` (`mise run site-repos`) |
+| The page, and its hand-written highlights | `site/src/pages/open-source/index.astro` |
 
-## Publish
+The weekly refresh moved across unchanged. It still regenerates the repository
+list from the `Lab271` organization, commits it, and asks for a deploy; only the
+publishing target changed, from GitHub Pages to S3 behind CloudFront.
 
-Every push to `main` runs `.github/workflows/deploy.yml`, which builds
-`docs/dist` and publishes it to GitHub Pages at <https://lab271.github.io/>.
-The Pages source must be set to "GitHub Actions" in the repository settings.
+## Why this repository still exists
 
-## Layout
+Three reasons, all of them about not breaking things:
 
-- `docs/`: the Astro Starlight site. Landing page:
-  `docs/src/content/docs/index.mdx`.
-- `.mise.toml`: pinned tools and dev/build tasks (run with `mise run <task>`).
-- `.github/workflows/`: `ci.yml` (build and check on PRs), `deploy.yml`
-  (publish on push to main) and `refresh-repos.yml` (weekly repo-list refresh).
+- **The URL has inbound links** we do not control, including from
+  [schubergphilis.github.io](https://schubergphilis.github.io/). Archiving or
+  deleting this repository would turn those into 404s.
+- **It holds the history** of the content, and of how the site was built.
+- **Issues still work here.** The site it now points at is built from a private
+  repository, so this is the one public place to report that a page is wrong or
+  a repository is missing from the list.
 
-Branding follows the Lab271 design refresh; see [AGENTS.md](AGENTS.md) for the
-rules the theme implements.
+It is deliberately **not archived**: archiving is an org-level act, and an
+archived repository cannot take issues.
 
-## Contributing
+## How the redirect works
 
-This repository is maintained by Schuberg Philis and is not open to
-third-party contributions. Reports of a broken or inaccurate page are welcome:
-see [CONTRIBUTING.md](CONTRIBUTING.md), and
-[SECURITY.md](SECURITY.md) for anything security-related.
+`index.html` and `404.html` are hand-written, and there is no build step, no
+dependency and no workflow left in this repository.
+
+GitHub Pages cannot return a 301. A real one needs a custom domain on this
+repository, and `lab271.io` resolves to CloudFront rather than to Pages, so it
+cannot be one. The pages therefore use, in the order they take effect:
+`location.replace()` for anyone with JavaScript, a zero-delay `meta refresh` for
+anyone without, `rel=canonical` for crawlers, and a visible link if all three are
+ignored. `404.html` covers any deep link, since Pages serves it for every path it
+cannot match.
+
+Pages is served from the `main` branch at the repository root. `.nojekyll` turns
+off Jekyll processing, which has nothing to do here.
 
 ## License
 
 Proprietary, all rights reserved. See [LICENSE](LICENSE). The repository is
-public so GitHub Pages can serve the site, not so the source can be reused.
+public so GitHub Pages can serve it, not so the source can be reused.
