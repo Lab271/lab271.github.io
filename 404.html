@@ -2,25 +2,30 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<title>Lab271 open source has moved to lab271.io/open-source/</title>
+		<link rel="preconnect" href="https://lab271.io" />
+		<script>
+			location.replace('https://lab271.io/open-source/');
+		</script>
+		<meta http-equiv="refresh" content="0; url=https://lab271.io/open-source/" />
 
 		<!--
 			GitHub Pages serves this file for any path it cannot match, so an old deep
 			link into this site lands on the new one rather than on GitHub's 404.
 
-			Same redirect as index.html, and the same constraint: Pages cannot return a
-			301, so this responds 404 and then redirects. That is the correct status —
-			the requested path really is gone — and every visitor still arrives at
+			Same critical path as index.html, in the same order and for the same
+			reasons, and this comment sits below it rather than above it so that
+			`charset` stays inside the first 1024 bytes. See index.html for the full
+			note on why each of those four lines is where it is.
+
+			This responds 404 and then redirects, which is the correct status - the
+			requested path really is gone - and every visitor still arrives at
 			https://lab271.io/open-source/.
 
 			No rel=canonical here, unlike index.html: this file answers many different
-			URLs, and claiming one canonical for all of them would be a lie to a crawler.
+			URLs, and claiming one canonical for all of them would mislead a crawler.
 		-->
-		<meta http-equiv="refresh" content="0; url=https://lab271.io/open-source/" />
-		<script>
-			location.replace('https://lab271.io/open-source/');
-		</script>
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Lab271 open source has moved to lab271.io/open-source/</title>
 
 		<style>
 			:root {
